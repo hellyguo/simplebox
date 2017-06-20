@@ -51,7 +51,6 @@ public class SimpleBoxBootstrap {
     private String stopClassName;
     private String stopMethodName;
 
-    private URL[] classpath;
     private URLClassLoader targetClassLoader;
 
     private Thread targetThread;
@@ -74,7 +73,7 @@ public class SimpleBoxBootstrap {
         File classesDir = checkDir(appDir.getAbsolutePath() + CLASSES_DIR);
         File libDir = checkDir(appDir.getAbsolutePath() + LIB_DIR);
         readClassInfo(appBootConf);
-        classpath = genClasspath(classesDir, libDir);
+        URL[] classpath = genClasspath(classesDir, libDir);
         targetClassLoader = new URLClassLoader(classpath, Thread.currentThread().getContextClassLoader());
     }
 
