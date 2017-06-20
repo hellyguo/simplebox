@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Simplistic telnet server.
  */
-public final class TelnetServer {
+public class TelnetServer {
     private static final Logger LOGGER = LoggerFactory.getLogger(TelnetServer.class);
 
     private static final int PORT = 50023;

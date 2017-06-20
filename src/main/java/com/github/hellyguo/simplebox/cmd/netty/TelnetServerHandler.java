@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Handles a server-side channel.
  */
 @Sharable
-public class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
+class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
 
     public TelnetServerHandler() {
     }
@@ -49,7 +49,7 @@ public class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
         boolean close = false;
         if (request.isEmpty()) {
             response = "Please type something.\r\n";
-        } else if ("bye".equals(request.toLowerCase())) {
+        } else if ("shutdown".equals(request.toLowerCase())) {
             response = "Have a good day!\r\n";
             close = true;
         } else {
@@ -61,9 +61,10 @@ public class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
         ChannelFuture future = ctx.write(response);
 
         // Close the connection after sending 'Have a good day!'
-        // if the client has sent 'bye'.
+        // if the client has sent 'shutdown'.
         if (close) {
             future.addListener(ChannelFutureListener.CLOSE);
+            ctx.channel().parent().close();
         }
     }
 
