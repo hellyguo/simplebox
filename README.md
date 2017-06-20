@@ -18,4 +18,4 @@ StopClass=DemoStopper
 StopMethod=shutdown
 ```
 
-Now, run simplebox.bat/simplebox.sh. To stop, telnet localhost 50021, then type 'quit'.
+Now, run simplebox.bat/simplebox.sh. To stop, telnet localhost 50023, then type 'quit'.
