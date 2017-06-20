@@ -82,12 +82,13 @@ public class SimpleBoxBootstrap {
     }
 
     private void waitForCommand() {
-        int i = 200000;
         while (active.get()) {
-            i--;
-            if (i == 0) {
-                break;
+            try {
+                Thread.sleep(1000L);
+            } catch (InterruptedException e) {
+                //
             }
+            break;
         }
     }
 
