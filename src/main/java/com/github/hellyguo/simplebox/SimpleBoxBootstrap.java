@@ -4,6 +4,9 @@ package com.github.hellyguo.simplebox;
  * Created by Helly on 2017/06/19.
  */
 
+import com.github.hellyguo.simplebox.app.AppHolder;
+import com.github.hellyguo.simplebox.cmd.Commander;
+
 /**
  * scan dir:{app}<br>
  * loop and boot each app<br>

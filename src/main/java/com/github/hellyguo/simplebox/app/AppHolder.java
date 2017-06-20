@@ -1,4 +1,4 @@
-package com.github.hellyguo.simplebox;
+package com.github.hellyguo.simplebox.app;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ import java.util.Properties;
 /**
  * Created by Helly on 2017/06/20.
  */
-class AppHolder {
+public class AppHolder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AppHolder.class);
 
@@ -45,7 +45,7 @@ class AppHolder {
 
     private Thread targetThread;
 
-    void init() {
+    public void init() {
         String home = getSimpleBoxHome();
         File appDir = checkDir(home + APP_DIR);
         File appBootConf = checkFile(appDir.getAbsolutePath() + BOOT_PROP);
@@ -56,11 +56,11 @@ class AppHolder {
         targetClassLoader = new URLClassLoader(classpath, Thread.currentThread().getContextClassLoader());
     }
 
-    void boot() {
+    public void boot() {
         targetThread = bootApp();
     }
 
-    void shutdown() {
+    public void shutdown() {
         stopApp();
         try {
             targetThread.join(10000L);

@@ -1,14 +1,14 @@
-package com.github.hellyguo.simplebox;
+package com.github.hellyguo.simplebox.cmd;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by Helly on 2017/06/20.
  */
-class Commander {
+public class Commander {
     private AtomicBoolean active = new AtomicBoolean(true);
 
-    void waitForCommand() {
+    public void waitForCommand() {
         while (active.get()) {
             try {
                 Thread.sleep(1000L);
