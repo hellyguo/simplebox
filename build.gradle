@@ -18,3 +18,33 @@ dependencies {
 }
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'SimpleBox Bootstrap',
+                'Implementation-Version': version,
+                'Main-Class': 'com.github.hellyguo.simplebox.SimpleBoxBootstrap'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+
+def distributionsCopySpec = copySpec {
+    into('app'){
+        from 'app'
+        include '*.txt'
+    }
+    into('lib') {
+        from libsDir
+        include '*-all-*.jar' //copy the jar
+    }
+    into('bin') {
+        from 'bin' //custom start script
+    }
+    from 'README.md'
+}
+
+task dist(type: Zip, dependsOn: 'fatJar') { with distributionsCopySpec }
