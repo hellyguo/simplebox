@@ -1,5 +1,8 @@
 .idea
 .gradle
-app
+app/boot.properties
+app/classes
+app/lib
+app/README.txt
 build
 lib
