@@ -36,6 +36,8 @@ public class AppHolder {
     private static final String STOP_CLASS_NAME = "StopClass";
     private static final String STOP_METHOD_NAME = "StopMethod";
 
+    private static final AppHolder HOLDER = new AppHolder();
+
     private String bootClassName;
     private String bootMethodName;
     private String stopClassName;
@@ -44,6 +46,15 @@ public class AppHolder {
     private URLClassLoader targetClassLoader;
 
     private Thread targetThread;
+
+    private AppStatus status = AppStatus.STOPPED;
+
+    public static AppHolder getHolder() {
+        return HOLDER;
+    }
+
+    private AppHolder() {
+    }
 
     /**
      * init simplebox env
@@ -96,6 +107,7 @@ public class AppHolder {
         Thread thread = new Thread(() -> {
             try {
                 runUnderSpecialClassLoader(Thread.currentThread().getContextClassLoader(), bootClassName, bootMethodName);
+                status = AppStatus.RUNNING;
             } catch (Exception e) {
                 LOGGER.error(e.getMessage(), e);
                 System.exit(-1);
@@ -131,6 +143,7 @@ public class AppHolder {
     private void stopApp() {
         try {
             runUnderSpecialClassLoader(targetClassLoader, stopClassName, stopMethodName);
+            status = AppStatus.STOPPED;
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             System.exit(-1);
@@ -179,5 +192,9 @@ public class AppHolder {
             System.exit(-1);
         }
         return home;
+    }
+
+    public AppStatus getStatus() {
+        return status;
     }
 }

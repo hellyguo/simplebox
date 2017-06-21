@@ -17,7 +17,7 @@ import com.github.hellyguo.simplebox.cmd.Commander;
 public class SimpleBoxBootstrap {
 
     // app holder
-    private AppHolder holder = new AppHolder();
+    private AppHolder holder = AppHolder.getHolder();
     // commander
     private Commander cmder = new Commander();
 
