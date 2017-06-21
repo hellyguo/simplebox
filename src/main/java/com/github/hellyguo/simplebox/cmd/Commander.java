@@ -1,6 +1,6 @@
 package com.github.hellyguo.simplebox.cmd;
 
-import com.github.hellyguo.simplebox.cmd.netty.TelnetServer;
+import com.github.hellyguo.simplebox.cmd.netty.CommandServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +12,7 @@ public class Commander {
 
     public void waitForCommand() {
         try {
-            TelnetServer server = new TelnetServer();
+            CommandServer server = new CommandServer();
             server.execute();
         } catch (Exception e) {
             LOGGER.warn(e.getMessage(), e);

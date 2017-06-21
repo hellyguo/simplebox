@@ -26,12 +26,12 @@ import io.netty.handler.codec.string.StringEncoder;
 /**
  * Creates a newly configured {@link ChannelPipeline} for a new channel.
  */
-class TelnetServerInitializer extends ChannelInitializer<SocketChannel> {
+class CommandServerInitializer extends ChannelInitializer<SocketChannel> {
 
     private static final StringDecoder DECODER = new StringDecoder();
     private static final StringEncoder ENCODER = new StringEncoder();
 
-    private static final TelnetServerHandler SERVER_HANDLER = new TelnetServerHandler();
+    private static final CommandServerHandler SERVER_HANDLER = new CommandServerHandler();
 
     @Override
     public void initChannel(SocketChannel ch) throws Exception {

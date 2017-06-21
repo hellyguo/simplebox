@@ -27,18 +27,18 @@ import org.slf4j.LoggerFactory;
 /**
  * Simplistic telnet server.
  */
-public class TelnetServer {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TelnetServer.class);
+public class CommandServer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommandServer.class);
 
     private static final int PORT = 50023;
 
     private int port;
 
-    public TelnetServer() {
+    public CommandServer() {
         this(PORT);
     }
 
-    public TelnetServer(int port) {
+    public CommandServer(int port) {
         this.port = port;
     }
 
@@ -50,7 +50,7 @@ public class TelnetServer {
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
-                    .childHandler(new TelnetServerInitializer());
+                    .childHandler(new CommandServerInitializer());
             b.bind(port).sync().channel().closeFuture().sync();
         } catch (Exception e) {
             LOGGER.warn(e.getMessage(), e);

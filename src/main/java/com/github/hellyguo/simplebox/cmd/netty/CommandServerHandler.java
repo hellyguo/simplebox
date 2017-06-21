@@ -29,9 +29,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Handles a server-side channel.
  */
 @Sharable
-class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
+class CommandServerHandler extends SimpleChannelInboundHandler<String> {
 
-    public TelnetServerHandler() {
+    public CommandServerHandler() {
     }
 
     @Override
