@@ -43,8 +43,7 @@ public class AppHolder {
     private String stopClassName;
     private String stopMethodName;
 
-    private URLClassLoader targetClassLoader;
-
+    private URL[] classpath;
     private Thread targetThread;
 
     private AppStatus status = AppStatus.STOPPED;
@@ -66,8 +65,7 @@ public class AppHolder {
         File classesDir = checkDir(appDir.getAbsolutePath() + CLASSES_DIR);
         File libDir = checkDir(appDir.getAbsolutePath() + LIB_DIR);
         readClassInfo(appBootConf);
-        URL[] classpath = genClasspath(classesDir, libDir);
-        targetClassLoader = new URLClassLoader(classpath, Thread.currentThread().getContextClassLoader());
+        classpath = genClasspath(classesDir, libDir);
     }
 
     /**
@@ -104,6 +102,7 @@ public class AppHolder {
     }
 
     private Thread bootApp() {
+        URLClassLoader targetClassLoader = new URLClassLoader(classpath, Thread.currentThread().getContextClassLoader());
         Thread thread = new Thread(() -> {
             try {
                 runUnderSpecialClassLoader(Thread.currentThread().getContextClassLoader(), bootClassName, bootMethodName);
@@ -142,7 +141,7 @@ public class AppHolder {
 
     private void stopApp() {
         try {
-            runUnderSpecialClassLoader(targetClassLoader, stopClassName, stopMethodName);
+            runUnderSpecialClassLoader(targetThread.getContextClassLoader(), stopClassName, stopMethodName);
             status = AppStatus.STOPPED;
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
