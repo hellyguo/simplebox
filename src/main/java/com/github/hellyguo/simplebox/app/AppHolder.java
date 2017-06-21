@@ -72,18 +72,22 @@ public class AppHolder {
      * boot the app
      */
     public void boot() {
-        targetThread = bootApp();
+        if (AppStatus.STOPPED.equals(status)) {
+            targetThread = bootApp();
+        }
     }
 
     /**
      * shutdown the app
      */
     public void shutdown() {
-        stopApp();
-        try {
-            targetThread.join(10000L);
-        } catch (InterruptedException e) {
-            LOGGER.warn(e.getMessage(), e);
+        if (AppStatus.RUNNING.equals(status)) {
+            stopApp();
+            try {
+                targetThread.join(10000L);
+            } catch (InterruptedException e) {
+                LOGGER.warn(e.getMessage(), e);
+            }
         }
     }
 
