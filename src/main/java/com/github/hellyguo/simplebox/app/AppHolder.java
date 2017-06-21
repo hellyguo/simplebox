@@ -45,6 +45,9 @@ public class AppHolder {
 
     private Thread targetThread;
 
+    /**
+     * init simplebox env
+     */
     public void init() {
         String home = getSimpleBoxHome();
         File appDir = checkDir(home + APP_DIR);
@@ -56,10 +59,16 @@ public class AppHolder {
         targetClassLoader = new URLClassLoader(classpath, Thread.currentThread().getContextClassLoader());
     }
 
+    /**
+     * boot the app
+     */
     public void boot() {
         targetThread = bootApp();
     }
 
+    /**
+     * shutdown the app
+     */
     public void shutdown() {
         stopApp();
         try {

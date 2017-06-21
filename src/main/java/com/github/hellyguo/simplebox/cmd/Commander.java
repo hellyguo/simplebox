@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
 public class Commander {
     private static final Logger LOGGER = LoggerFactory.getLogger(Commander.class);
 
+    /**
+     * wait for command and perform command, util receive command 'shutdown'<br>
+     * sync blocked
+     */
     public void waitForCommand() {
         try {
             CommandServer server = new CommandServer();

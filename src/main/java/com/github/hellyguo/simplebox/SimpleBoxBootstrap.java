@@ -9,13 +9,16 @@ import com.github.hellyguo.simplebox.cmd.Commander;
 
 /**
  * scan dir:{app}<br>
- * loop and boot each app<br>
+ * boot the app<br>
  * wait for command<br>
- * TODO:1.boot order 2.classloader isolation 3.manager console<br>
+ * destroy the app<br>
+ * TODO:1.support multi app 2.classloader isolation 3.boot order 4.manager console<br>
  */
 public class SimpleBoxBootstrap {
 
+    // app holder
     private AppHolder holder = new AppHolder();
+    // commander
     private Commander cmder = new Commander();
 
     public static void main(String[] args) throws Exception {
