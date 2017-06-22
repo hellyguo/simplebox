@@ -18,6 +18,7 @@ package com.github.hellyguo.simplebox.cmd.netty;
 import com.github.hellyguo.simplebox.app.AppHolder;
 import com.github.hellyguo.simplebox.app.AppStatus;
 import com.github.hellyguo.simplebox.cmd.SupportCommand;
+import com.github.hellyguo.simplebox.monitor.Monitor;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -36,6 +37,7 @@ class CommandServerHandler extends SimpleChannelInboundHandler<String> {
     private static final String WELCOME_MSG;
 
     private AppHolder holder = AppHolder.getHolder();
+    private Monitor monitor = Monitor.getMonitor();
 
     static {
         StringBuilder builder = new StringBuilder();
@@ -103,22 +105,27 @@ class CommandServerHandler extends SimpleChannelInboundHandler<String> {
 
     private ResponseInfo performCommand(SupportCommand cmd) {
         switch (cmd) {
-            case NOW:
+            case NOW: {
                 return new ResponseInfo("current time:" + new Date() + "\r\n#> ", false, false);
-            case HELP:
+            }
+            case HELP: {
                 return new ResponseInfo(HELP_MSG, false, false);
-            case DISCONN:
+            }
+            case DISCONN: {
                 return new ResponseInfo("the connection will be end soon.\r\n", true, false);
-            case STATUS:
+            }
+            case STATUS: {
                 return new ResponseInfo("app's current status is " + holder.getStatus() + ".\r\n#> ", false, false);
-            case START:
+            }
+            case START: {
                 if (AppStatus.STOPPED.equals(holder.getStatus())) {
                     holder.boot();
                     return new ResponseInfo("app was started.\r\n#> ", false, false);
                 } else {
                     return new ResponseInfo("app was already started\r\n#> ", false, false);
                 }
-            case RESTART:
+            }
+            case RESTART: {
                 if (AppStatus.RUNNING.equals(holder.getStatus())) {
                     holder.shutdown();
                     try {
@@ -131,17 +138,31 @@ class CommandServerHandler extends SimpleChannelInboundHandler<String> {
                     holder.boot();
                 }
                 return new ResponseInfo("app was restarted.\r\n#> ", false, false);
-            case STOP:
+            }
+            case STOP: {
                 if (AppStatus.RUNNING.equals(holder.getStatus())) {
                     holder.shutdown();
                     return new ResponseInfo("app was stopped.\r\n#> ", false, false);
                 } else {
                     return new ResponseInfo("app was already stopped\r\n#> ", false, false);
                 }
-            case SHUTDOWN:
+            }
+            case SHUTDOWN: {
                 return new ResponseInfo("app and simplebox will shutdown soon.\r\n", true, true);
-            default:
+            }
+            case THREAD: {
+                StringBuilder builder = Monitor.getMonitor().getThreadsInfo();
+                builder.append("#> ");
+                return new ResponseInfo(builder.toString(), false, false);
+            }
+            case MEM: {
+                StringBuilder builder = Monitor.getMonitor().getMemInfo();
+                builder.append("#> ");
+                return new ResponseInfo(builder.toString(), false, false);
+            }
+            default: {
                 return new ResponseInfo("unknown command\r\n#> ", false, false);
+            }
         }
     }
 
