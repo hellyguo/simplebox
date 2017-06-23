@@ -160,6 +160,11 @@ class CommandServerHandler extends SimpleChannelInboundHandler<String> {
                 builder.append("#> ");
                 return new ResponseInfo(builder.toString(), false, false);
             }
+            case MXBEAN_MEM: {
+                StringBuilder builder = Monitor.getMonitor().getMXBeanMemInfo();
+                builder.append("#> ");
+                return new ResponseInfo(builder.toString(), false, false);
+            }
             default: {
                 return new ResponseInfo("unknown command\r\n#> ", false, false);
             }

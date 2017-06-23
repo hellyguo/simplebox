@@ -3,6 +3,8 @@ package com.github.hellyguo.simplebox.monitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryMXBean;
 import java.util.Arrays;
 
 /**
@@ -43,13 +45,22 @@ public class Monitor {
     public StringBuilder getMemInfo() {
         StringBuilder builder = new StringBuilder();
         Runtime runtime = Runtime.getRuntime();
-        double totalMemory = runtime.totalMemory()/1024D/1024D;
-        double freeMemory = runtime.freeMemory()/1024D/1024D;
-        double maxMemory = runtime.maxMemory()/1024D/1024D;
-        builder.append("mem info:\r\n")
+        double totalMemory = runtime.totalMemory() / 1024D / 1024D;
+        double freeMemory = runtime.freeMemory() / 1024D / 1024D;
+        double maxMemory = runtime.maxMemory() / 1024D / 1024D;
+        builder.append("jvm mem info:\r\n")
                 .append("\ttotalMemory:\t").append(totalMemory).append("MB\r\n")
                 .append("\tfreeMemory:\t").append(freeMemory).append("MB\r\n")
                 .append("\tmaxMemory:\t").append(maxMemory).append("MB\r\n");
+        return builder;
+    }
+
+    public StringBuilder getMXBeanMemInfo() {
+        StringBuilder builder = new StringBuilder();
+        MemoryMXBean memoryMXBean = ManagementFactory.getMemoryMXBean();
+        builder.append("MXBean mem info:\r\n")
+                .append("Heap:\t\t").append(memoryMXBean.getHeapMemoryUsage()).append("\r\n")
+                .append("NonHeap:\t").append(memoryMXBean.getNonHeapMemoryUsage()).append("\r\n");
         return builder;
     }
 }

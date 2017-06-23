@@ -19,7 +19,8 @@ public enum SupportCommand {
     STOP("stop the app, simplebox will be alive."),
     //monitor
     THREAD("print threads info"),
-    MEM("print current mem info");
+    MEM("print general mem info"),
+    MXBEAN_MEM("print MXBean mem info");
 
     private String desc;
 
