@@ -155,6 +155,11 @@ class CommandServerHandler extends SimpleChannelInboundHandler<String> {
                 builder.append("#> ");
                 return new ResponseInfo(builder.toString(), false, false);
             }
+            case MXBEAN_THREAD: {
+                StringBuilder builder = Monitor.getMonitor().getMXBeanThreadInfo();
+                builder.append("#> ");
+                return new ResponseInfo(builder.toString(), false, false);
+            }
             case MEM: {
                 StringBuilder builder = Monitor.getMonitor().getMemInfo();
                 builder.append("#> ");
